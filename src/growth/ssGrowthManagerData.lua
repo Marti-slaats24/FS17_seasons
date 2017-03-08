@@ -114,7 +114,7 @@ function ssGrowthManagerData:getFruitsTransitionStates(growthTransitionKey, file
             break
         end
 
-        local fruitName = getXMLString(file,fruitKey .. "#fruitName")
+        local fruitName = getXMLString(file, fruitKey .. "#fruitName")
         if fruitName == nil then
             logInfo("ssGrowthManagerData: getFruitsTransitionStates: XML loading failed fruitKey" .. fruitKey .. " not found")
         end
@@ -122,12 +122,12 @@ function ssGrowthManagerData:getFruitsTransitionStates(growthTransitionKey, file
         growthData[growthTransitionNum][fruitName] = {}
         growthData[growthTransitionNum][fruitName].fruitName = fruitName
 
-        local normalGrowthState = getXMLInt(file,fruitKey .. "#normalGrowthState")
+        local normalGrowthState = getXMLInt(file, fruitKey .. "#normalGrowthState")
         if normalGrowthState ~= nil then
             growthData[growthTransitionNum][fruitName].normalGrowthState = normalGrowthState
         end
 
-        local normalGrowthMaxState =  getXMLString(file,fruitKey .. "#normalGrowthMaxState")
+        local normalGrowthMaxState =  getXMLString(file, fruitKey .. "#normalGrowthMaxState")
         if normalGrowthMaxState ~= nil then
             if normalGrowthMaxState == "MAX_STATE" then
                 growthData[growthTransitionNum][fruitName].normalGrowthMaxState = ssGrowthManager.MAX_STATE
@@ -141,7 +141,7 @@ function ssGrowthManagerData:getFruitsTransitionStates(growthTransitionKey, file
             growthData[growthTransitionNum][fruitName].setGrowthState = setGrowthState
         end
 
-        local setGrowthMaxState =  getXMLString(file,fruitKey .. "#setGrowthMaxState")
+        local setGrowthMaxState =  getXMLString(file, fruitKey .. "#setGrowthMaxState")
         if setGrowthMaxState ~= nil then
             --growthData[growthTransitionNum][fruitName].setGrowthMaxState = setGrowthMaxState
             if setGrowthMaxState == "MAX_STATE" then
@@ -151,7 +151,7 @@ function ssGrowthManagerData:getFruitsTransitionStates(growthTransitionKey, file
             end
         end
 
-        local desiredGrowthState =  getXMLString(file,fruitKey .. "#desiredGrowthState")
+        local desiredGrowthState =  getXMLString(file, fruitKey .. "#desiredGrowthState")
         if desiredGrowthState ~= nil then
             if desiredGrowthState == "CUT" then
                 growthData[growthTransitionNum][fruitName].desiredGrowthState = ssGrowthManager.CUT
@@ -162,17 +162,17 @@ function ssGrowthManagerData:getFruitsTransitionStates(growthTransitionKey, file
             end
         end
 
-        local extraGrowthMinState = getXMLInt(file,fruitKey .. "#extraGrowthMinState")
+        local extraGrowthMinState = getXMLInt(file, fruitKey .. "#extraGrowthMinState")
         if extraGrowthMinState ~= nil then
             growthData[growthTransitionNum][fruitName].extraGrowthMinState = extraGrowthMinState
         end
 
-        local extraGrowthMaxState = getXMLInt(file,fruitKey .. "#extraGrowthMaxState")
+        local extraGrowthMaxState = getXMLInt(file, fruitKey .. "#extraGrowthMaxState")
         if extraGrowthMaxState ~= nil then
             growthData[growthTransitionNum][fruitName].extraGrowthMaxState = extraGrowthMaxState
         end
 
-        local extraGrowthFactor = getXMLInt(file,fruitKey .. "#extraGrowthFactor")
+        local extraGrowthFactor = getXMLInt(file, fruitKey .. "#extraGrowthFactor")
         if extraGrowthFactor ~= nil then
             growthData[growthTransitionNum][fruitName].extraGrowthFactor = extraGrowthFactor
         end
@@ -196,7 +196,7 @@ function ssGrowthManagerData:getDefaultFruitsData(rootKey, file, parentData)
             end
 
             local fruitName = getXMLString(file, defaultFruitKey)
-            local maxSprayGrowthStage = getXMLInt(file,string.format("%s.defaultFruit(%i)#maxSprayGrowthStage", defaultFruitsKey, i))
+            local maxSprayGrowthStage = getXMLInt(file, string.format("%s.defaultFruit(%i)#maxSprayGrowthStage", defaultFruitsKey, i))
             if fruitName ~= nil then
                 --table.insert(defaultFruits,fruitName)
                 defaultFruits[fruitName].maxSprayGrowthStage = maxSprayGrowthStage
