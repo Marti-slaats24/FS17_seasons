@@ -17,19 +17,19 @@ function ssGrowthManagerData:loadAllData()
     local file = loadXMLFile("xml", path)
     if file == nil then
         logInfo("ssGrowthManagerData: Failed to load XML growth data file " .. path)
-        return nil,nil
+        return nil, nil
     end
 
     local defaultFruits = self:getDefaultFruitsData(rootKey, file)
     if defaultFruits == nil then
         logInfo("ssGrowthManagerData: Failed to load XML growth data file (defaultFruits) " .. path)
-        return nil,nil
+        return nil, nil
     end
 
     local growthData = self:getGrowthData(rootKey, file)
     if growthData == nil then
         logInfo("ssGrowthManagerData: Failed to load XML growth data file (growthTransitions) " .. path)
-        return nil,nil
+        return nil, nil
     end
     delete(file)
 

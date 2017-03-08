@@ -249,14 +249,14 @@ function ssGrowthManager:incrementGrowthState(fruit, fruitName, x, z, widthX, wi
     local growthResult = addDensityMaskedParallelogram(fruit.id, x, z, widthX, widthZ, heightX, heightZ, 0, numFruitStateChannels, fruit.id, 0, numFruitStateChannels, 1)
     
     if growthResult ~= 0 then
-        local detailId = g_currentMission.terrainDetailId
+        local terrainDetailId = g_currentMission.terrainDetailId
         if fruitTypeGrowth.resetsSpray and minState <= self.defaultFruitsData[fruitName].maxSprayGrowthStage then
-            local sprayResetResult = addDensityMaskedParallelogram(detailId, x, z, widthX, widthZ, heightX, heightZ, g_currentMission.sprayFirstChannel, g_currentMission.sprayNumChannels, fruit.id, 0, numFruitStateChannels, -1)
+            local sprayResetResult = addDensityMaskedParallelogram(terrainDetailId, x, z, widthX, widthZ, heightX, heightZ, g_currentMission.sprayFirstChannel, g_currentMission.sprayNumChannels, fruit.id, 0, numFruitStateChannels, -1)
         end
         if fruitTypeGrowth.groundTypeChanged > 0 then --grass
-            setDensityCompareParams(detailId, "greater", 0)
-            local sum = setDensityMaskedParallelogram(detailId, x, z, widthX, widthZ, heightX, heightZ, g_currentMission.terrainDetailTypeFirstChannel, g_currentMission.terrainDetailTypeNumChannels, fruit.id, fruitTypeGrowth.groundTypeChangeGrowthState, numFruitStateChannels, fruitTypeGrowth.groundTypeChanged)
-            setDensityCompareParams(detailId, "greater", -1)
+            setDensityCompareParams(terrainDetailId, "greater", 0)
+            local sum = setDensityMaskedParallelogram(terrainDetailId, x, z, widthX, widthZ, heightX, heightZ, g_currentMission.terrainDetailTypeFirstChannel, g_currentMission.terrainDetailTypeNumChannels, fruit.id, fruitTypeGrowth.groundTypeChangeGrowthState, numFruitStateChannels, fruitTypeGrowth.groundTypeChanged)
+            setDensityCompareParams(terrainDetailId, "greater", -1)
         end
     end
 end
@@ -273,9 +273,9 @@ function ssGrowthManager:incrementExtraGrowthState(fruit, fruitName, x, z, width
     
     if growthResult ~= 0 then
         local fruitTypeGrowth = FruitUtil.fruitTypeGrowths[fruitName]
-        local detailId = g_currentMission.terrainDetailId
+        local terrainDetailId = g_currentMission.terrainDetailId
         if fruitTypeGrowth.resetsSpray and minState <= self.defaultFruitsData[fruitName].maxSprayGrowthStage then
-            local sprayResetResult = addDensityMaskedParallelogram(detailId, x, z, widthX, widthZ, heightX, heightZ, g_currentMission.sprayFirstChannel, g_currentMission.sprayNumChannels, fruit.id, 0, numFruitStateChannels, -1)
+            local sprayResetResult = addDensityMaskedParallelogram(terrainDetailId, x, z, widthX, widthZ, heightX, heightZ, g_currentMission.sprayFirstChannel, g_currentMission.sprayNumChannels, fruit.id, 0, numFruitStateChannels, -1)
         end
     end
 end
