@@ -196,8 +196,10 @@ function ssGrowthManagerData:getDefaultFruitsData(rootKey, file, parentData)
             end
 
             local fruitName = getXMLString(file, defaultFruitKey)
+            local maxSprayGrowthStage = getXMLInt(file,string.format("%s.defaultFruit(%i)#maxSprayGrowthStage", defaultFruitsKey, i))
             if fruitName ~= nil then
-                table.insert(defaultFruits,fruitName)
+                --table.insert(defaultFruits,fruitName)
+                defaultFruits[fruitName].maxSprayGrowthStage = maxSprayGrowthStage
             else
                 logInfo("ssGrowthManagerData: getDefaultFruitsData: XML loading failed " .. defaultFruitKey )
                 return nil

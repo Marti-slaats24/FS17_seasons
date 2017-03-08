@@ -106,6 +106,9 @@ function ssGrowthManager:getGrowthData()
         logInfo("ssGrowthManager: default growth data not found")
         return false
     end
+    print_r(self.defaultFruitsData)
+    self:updateDefaultFruitsData("testFruit")
+    print_r(self.defaultFruitsData)
     return true
 end
 
@@ -247,7 +250,7 @@ function ssGrowthManager:incrementGrowthState(fruit, fruitName, x, z, widthX, wi
     
     if growthResult ~= 0 then
         local detailId = g_currentMission.terrainDetailId
-        if fruitTypeGrowth.resetsSpray then
+        if fruitTypeGrowth.resetsSpray and minState <= self.defaultFruitsData[fruitName].maxSprayGrowthStage then
             local sprayResetResult = addDensityMaskedParallelogram(detailId, x, z, widthX, widthZ, heightX, heightZ, g_currentMission.sprayFirstChannel, g_currentMission.sprayNumChannels, fruit.id, 0, numFruitStateChannels, -1)
         end
         if fruitTypeGrowth.groundTypeChanged > 0 then --grass
@@ -271,7 +274,7 @@ function ssGrowthManager:incrementExtraGrowthState(fruit, fruitName, x, z, width
     if growthResult ~= 0 then
         local fruitTypeGrowth = FruitUtil.fruitTypeGrowths[fruitName]
         local detailId = g_currentMission.terrainDetailId
-        if fruitTypeGrowth.resetsSpray then
+        if fruitTypeGrowth.resetsSpray and minState <= self.defaultFruitsData[fruitName].maxSprayGrowthStage then
             local sprayResetResult = addDensityMaskedParallelogram(detailId, x, z, widthX, widthZ, heightX, heightZ, g_currentMission.sprayFirstChannel, g_currentMission.sprayNumChannels, fruit.id, 0, numFruitStateChannels, -1)
         end
     end
@@ -372,6 +375,7 @@ end
 
 function ssGrowthManager:updateDefaultFruitsData(fruitName)
     self.defaultFruitsData[fruitName] = true
+    --TODO:update this
 end
 
 function ssGrowthManager:updateCanPlantData(fruitName)
