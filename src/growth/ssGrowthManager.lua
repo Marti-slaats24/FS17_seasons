@@ -84,9 +84,10 @@ function ssGrowthManager:loadMap(name)
         ssDensityMapScanner:registerCallback("ssGrowthManagerHandleGrowth", self, self.handleGrowth)
 
         self:buildCanPlantData(self.defaultFruitsData)
-        addConsoleCommand("ssResetGrowth", "Resets growth back to default starting stage", "consoleCommandResetGrowth", self);
-        addConsoleCommand("ssIncrementGrowth", "Increments growth for test purposes", "consoleCommandIncrementGrowthStage", self);
-        addConsoleCommand("ssSetGrowth", "Sets growth for test purposes", "consoleCommandSetGrowthStage", self);
+        addConsoleCommand("ssResetGrowth", "Resets growth back to default starting stage", "consoleCommandResetGrowth", self)
+        addConsoleCommand("ssIncrementGrowth", "Increments growth for test purposes", "consoleCommandIncrementGrowthStage", self)
+        addConsoleCommand("ssSetGrowth", "Sets growth for test purposes", "consoleCommandSetGrowthStage", self)
+        addConsoleCommand("ssTestStuff", "Tests stuff", "consoleCommandTestStuff", self)
         self:dayChanged()
     end
 end
@@ -415,4 +416,12 @@ function ssGrowthManager:consoleCommandSetGrowthStage(newGrowthStage)
     self.currentGrowthTransitionPeriod = self.fakeGrowthTransitionNum
     ssDensityMapScanner:queueJob("ssGrowthManagerHandleGrowth", 1)
     self:rebuildWillGerminateData()
+end
+
+function ssGrowthManager:consoleCommandTestStuff()
+    -- test stuff in here
+    print_r(self.defaultFruitsData)
+    log("ssGrowthManager: update default fruits data")
+    self:updateDefaultFruitsData()
+    print_r(self.defaultFruitsData)
 end
