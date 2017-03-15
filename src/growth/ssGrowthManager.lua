@@ -96,7 +96,6 @@ function ssGrowthManager:getGrowthData()
     local defaultFruitsData,growthData = ssGrowthManagerData:loadAllData()
 
     if defaultFruitsData ~= nil then
-        --self.defaultFruitsData = Set(defaultFruitsData)
         self.defaultFruitsData = defaultFruitsData
     else
         logInfo("ssGrowthManager: default fruits data not found")
@@ -383,9 +382,7 @@ function ssGrowthManager:unknownFruitFound(fruitName)
 end
 
 function ssGrowthManager:updateDefaultFruitsData(fruitName)
-    --self.defaultFruitsData[fruitName] = true
     self.defaultFruitsData[fruitName] = Utils.copyTable(self.defaultFruitsData[self.fruitNameToCopyForUnknownFruits])
-    --TODO:update this
 end
 
 function ssGrowthManager:updateCanPlantData(fruitName)
@@ -428,6 +425,6 @@ function ssGrowthManager:consoleCommandTestStuff()
     -- test stuff in here
     print_r(self.defaultFruitsData)
     log("ssGrowthManager: update default fruits data")
-    self:updateDefaultFruitsData()
+    self:updateDefaultFruitsData("newFruit")
     print_r(self.defaultFruitsData)
 end
