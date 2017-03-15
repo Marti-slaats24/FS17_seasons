@@ -96,7 +96,8 @@ function ssGrowthManager:getGrowthData()
     local defaultFruitsData,growthData = ssGrowthManagerData:loadAllData()
 
     if defaultFruitsData ~= nil then
-        self.defaultFruitsData = Set(defaultFruitsData)
+        --self.defaultFruitsData = Set(defaultFruitsData)
+        self.defaultFruitsData = defaultFruitsData
     else
         logInfo("ssGrowthManager: default fruits data not found")
         return false
@@ -108,9 +109,6 @@ function ssGrowthManager:getGrowthData()
         logInfo("ssGrowthManager: default growth data not found")
         return false
     end
-    print_r(self.defaultFruitsData)
-    self:updateDefaultFruitsData("testFruit")
-    print_r(self.defaultFruitsData)
     return true
 end
 
@@ -228,6 +226,7 @@ end
 
 --increment by 1 for crops between normalGrowthState  normalGrowthMaxState or for crops at normalGrowthState
 function ssGrowthManager:incrementGrowthState(fruit, fruitName, x, z, widthX, widthZ, heightX, heightZ)
+    local useMaxState = false
     local minState = self.growthData[self.currentGrowthTransitionPeriod][fruitName].normalGrowthState
     if minState == 1 and self.willGerminateData[fruitName] == false then --check if the fruit has just been planted and delay growth if germination temp not reached
         return
@@ -243,6 +242,7 @@ function ssGrowthManager:incrementGrowthState(fruit, fruitName, x, z, widthX, wi
             maxState = fruitTypeGrowth.numGrowthStates-1
         end
         setDensityMaskParams(fruit.id, "between", minState, maxState)
+        useMaxState = true
     else
         setDensityMaskParams(fruit.id, "equals", minState)
     end
@@ -253,6 +253,9 @@ function ssGrowthManager:incrementGrowthState(fruit, fruitName, x, z, widthX, wi
     if growthResult ~= 0 then
         local terrainDetailId = g_currentMission.terrainDetailId
         if fruitTypeGrowth.resetsSpray and minState <= self.defaultFruitsData[fruitName].maxSprayGrowthStage then
+            if useMaxState == true then
+                setDensityMaskParams(fruit.id, "between", minState, self.defaultFruitsData[fruitName].maxSprayGrowthStage)    
+            end
             local sprayResetResult = addDensityMaskedParallelogram(terrainDetailId, x, z, widthX, widthZ, heightX, heightZ, g_currentMission.sprayFirstChannel, g_currentMission.sprayNumChannels, fruit.id, 0, numFruitStateChannels, -1)
         end
         if fruitTypeGrowth.groundTypeChanged > 0 then --grass
@@ -278,6 +281,7 @@ function ssGrowthManager:incrementExtraGrowthState(fruit, fruitName, x, z, width
         local fruitTypeGrowth = FruitUtil.fruitTypeGrowths[fruitName]
         local terrainDetailId = g_currentMission.terrainDetailId
         if fruitTypeGrowth.resetsSpray and minState <= self.defaultFruitsData[fruitName].maxSprayGrowthStage then
+            setDensityMaskParams(fruit.id, "between", minState, self.defaultFruitsData[fruitName].maxSprayGrowthStage)
             local sprayResetResult = addDensityMaskedParallelogram(terrainDetailId, x, z, widthX, widthZ, heightX, heightZ, g_currentMission.sprayFirstChannel, g_currentMission.sprayNumChannels, fruit.id, 0, numFruitStateChannels, -1)
         end
     end
@@ -287,6 +291,7 @@ end
 --simulates growth and builds the canPlantData which is based on 'will the fruit grow in the next growth transition?'
 function ssGrowthManager:buildCanPlantData(fruitData)
     for fruitName, value in pairs(fruitData) do
+        logInfo("buildCanPlantData: fruitname: " .. fruitName)
         if fruitName ~= "dryGrass" then
             local transitionTable = {}
             for transition,v in pairs(self.growthData) do
@@ -378,7 +383,8 @@ function ssGrowthManager:unknownFruitFound(fruitName)
 end
 
 function ssGrowthManager:updateDefaultFruitsData(fruitName)
-    self.defaultFruitsData[fruitName] = true
+    --self.defaultFruitsData[fruitName] = true
+    self.defaultFruitsData[fruitName] = Utils.copyTable(self.defaultFruitsData[self.fruitNameToCopyForUnknownFruits])
     --TODO:update this
 end
 
