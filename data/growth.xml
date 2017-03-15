@@ -12,8 +12,8 @@
         <defaultFruit fruitName="sugarBeet" maxSprayGrowthStage="4"/>
         <defaultFruit fruitName="poplar" maxSprayGrowthStage="4"/>
         <defaultFruit fruitName="grass" maxSprayGrowthStage="4"/>
-        <defaultFruit fruitName="oilseedRadish" maxSprayGrowthStage="4"/>
-        <defaultFruit fruitName="dryGrass" maxSprayGrowthStage="4"/>
+        <defaultFruit fruitName="oilseedRadish" />
+        <defaultFruit fruitName="dryGrass" />
     </defaultFruits>
     <growthTransitions>
         <gt growthTransitionNum="1"> <!--late winter to early spring-->
