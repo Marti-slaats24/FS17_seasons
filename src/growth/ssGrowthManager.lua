@@ -86,7 +86,7 @@ function ssGrowthManager:loadMap(name)
         self:buildCanPlantData(self.defaultFruitsData)
         addConsoleCommand("ssResetGrowth", "Resets growth back to default starting stage", "consoleCommandResetGrowth", self)
         addConsoleCommand("ssIncrementGrowth", "Increments growth for test purposes", "consoleCommandIncrementGrowthStage", self)
-        addConsoleCommand("ssSetGrowth", "Sets growth for test purposes", "consoleCommandSetGrowthStage", self)
+        addConsoleCommand("ssSetGrowthStage", "Sets growth for test purposes", "consoleCommandSetGrowthStage", self)
         addConsoleCommand("ssTestStuff", "Tests stuff", "consoleCommandTestStuff", self)
         self:dayChanged()
     end
